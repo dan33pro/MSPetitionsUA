@@ -1,6 +1,6 @@
 const TABLA = {
-    name: 'Respuestas',
-    pk: 'id_respuesta',
+    name: 'Noticias',
+    pk: 'id_noticia',
 };
 
 module.exports = function (injectedStore) {
@@ -17,26 +17,26 @@ module.exports = function (injectedStore) {
     }
 
     async function upsert(body) {
-        const respuesta = {
-            id_peticion: body.id_peticion,
+        const noticia = {
             titulo: body.titulo,
-            respuesta: body.respuesta,
+            descripcion: body.descripcion,
+            fecha_publicacion: body.fecha_publicacion,
             cc_administrador: body.cc_administrador,
         };
 
-        if (body.accion == 'insert' && (!respuesta.id_peticion || !respuesta.titulo || !respuesta.respuesta || !respuesta.cc_administrador)) {
+        if (body.accion == 'insert' && (!noticia.titulo || !noticia.descripcion || !noticia.fecha_publicacion || !noticia.cc_administrador)) {
             return Promise.reject('No se indico la información necesaria');
-        } else if(body.accion == 'update' && body.id_respuesta) {
-            respuesta.id_respuesta = body.id_respuesta;
+        } else if(body.accion == 'update' && body.id_noticia) {
+            noticia.id_noticia = body.id_noticia;
         }
 
-        const response = await store.upsert(TABLA, respuesta, body.accion);
+        const response = await store.upsert(TABLA, noticia, body.accion);
         return response;
     }
 
     function remove(id) {
         if(!id) {
-            return Promise.reject('No se indico el id de la respuesta');
+            return Promise.reject('No se indico el id de la noticia');
         }
         return store.remove(TABLA, id);
     }

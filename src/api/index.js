@@ -6,6 +6,8 @@ const swaggerUi = require('swagger-ui-express');
 const config = require('../../config');
 const answer = require('./components/answer/network.js');
 const petition = require('./components/petition/network.js');
+const news_image = require('./components/news_image/network.js');
+const news = require('./components/news/network.js');
 const errors = require('../tools/network/errors');
 
 const app = express();
@@ -17,6 +19,8 @@ const swaggerDoc = require('./swagger.json');
 
 app.use('/api/answer', answer);
 app.use('/api/petition', petition);
+app.use('/api/news_image', news_image);
+app.use('/api/news', news);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // Debe ser el ultimo
