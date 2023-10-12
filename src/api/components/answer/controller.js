@@ -1,6 +1,6 @@
 const TABLA = {
-    name: 'Buses',
-    pk: 'placa_bus',
+    name: 'Respuestas',
+    pk: 'id_respuesta',
 };
 
 module.exports = function (injectedStore) {
@@ -17,23 +17,26 @@ module.exports = function (injectedStore) {
     }
 
     async function upsert(body) {
-        const bus = {
-            placa_bus: body.placa_bus,
-            modelo: body.modelo,
-            observaciones: body.observaciones,
-            id_ruta: body.id_ruta,
+        const ruta = {
+            id_peticion: body.id_peticion,
+            titulo: body.titulo,
+            respuesta: body.respuesta,
             cc_administrador: body.cc_administrador,
         };
-        if (!bus.placa_bus || !bus.modelo || !bus.observaciones ||  !bus.id_ruta || !bus.cc_administrador) {
+
+        if (body.accion == 'insert' && (!ruta.id_peticion || !ruta.titulo || !ruta.respuesta || !ruta.cc_administrador)) {
             return Promise.reject('No se indico la información necesaria');
+        } else if(body.accion == 'update' && body.id_respuesta) {
+            ruta.id_respuesta = body.id_respuesta;
         }
-        const response = await store.upsert(TABLA, bus, body.accion);
+
+        const response = await store.upsert(TABLA, ruta, body.accion);
         return response;
     }
 
     function remove(id) {
         if(!id) {
-            return Promise.reject('No se indico la placa del bus');
+            return Promise.reject('No se indico el id de la respuesta');
         }
         return store.remove(TABLA, id);
     }

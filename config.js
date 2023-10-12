@@ -8,6 +8,10 @@ module.exports = {
         host: process.env.ROUTER_AGENT_SERVICE_HOST || '',
         port: process.env.ROUTER_AGENT_SERVICE_PORT || '',
     },
+    msPetiotionsUA: {
+        host: process.env.PETITIONS_UA_SERVICE_HOST || '',
+        port: process.env.PETITIONS_UA_SERVICE_PORT || '',
+    },
     mysqlService: {
         host: process.env.MYSQL_SERVICE_HOST || '',
         port: process.env.MYSQL_SERVICE_PORT || '',
